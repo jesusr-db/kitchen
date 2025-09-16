@@ -15,10 +15,13 @@ from pyspark.sql.types import (
     comment = "Raw JSON events as ingested (one file per event)."
 )
 def all_events():
+    CATALOG = spark.conf.get("RAW_DATA_CATALOG")
+    SCHEMA = spark.conf.get("RAW_DATA_SCHEMA")
+    VOLUME = spark.conf.get("RAW_DATA_VOLUME")
     return (
         spark.readStream.format("cloudFiles") 
              .option("cloudFiles.format", "json")
-             .load("/Volumes/caspers/simulator/events")
+             .load(f"/Volumes/{CATALOG}/{SCHEMA}/{VOLUME}")
     )
 
 # ──────────────────────────────────────────────────────────────
