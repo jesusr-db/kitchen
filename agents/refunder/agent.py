@@ -32,7 +32,7 @@ set_uc_function_client(client)
 ############################################
 # Define your LLM endpoint and system prompt
 ############################################
-LLM_ENDPOINT_NAME = "databricks-meta-llama-3-3-70b-instruct"
+LLM_ENDPOINT_NAME = f"databricks-meta-llama-3-3-70b-instruct"
 llm = ChatDatabricks(endpoint=LLM_ENDPOINT_NAME)
 
 system_prompt = """You are RefundGPT, a CX agent responsible for refunding late food delivery orders.
@@ -65,8 +65,9 @@ system_prompt = """You are RefundGPT, a CX agent responsible for refunding late 
 ###############################################################################
 tools = []
 
-uc_tool_names = ["caspers.ai.get_order_details", "caspers.ai.get_location_timings",
-                 "caspers.ai.get_order_delivery_time"]
+uc_tool_names = [f"casperzy.ai.get_order_details", 
+                 f"casperzy.ai.get_location_timings",
+                 f"casperzy.ai.get_order_delivery_time"]
 uc_toolkit = UCFunctionToolkit(function_names=uc_tool_names)
 tools.extend(uc_toolkit.tools)
 
