@@ -1,3 +1,9 @@
 .state/
 data/generator/cache/
 notebooks/agent.py
+
+*conf*.json
+.DS_Store
+__pycache__
+.idea/
+.env
