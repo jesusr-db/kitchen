@@ -1,6 +1,6 @@
 .state/
 data/generator/cache/
-notebooks/agent.py
+stages/agent.py
 
 *conf*.json
 .DS_Store
