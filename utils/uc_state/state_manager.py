@@ -74,6 +74,7 @@ class UCState:
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP(),
             PRIMARY KEY (internal_id)
         ) USING DELTA
+        TBLPROPERTIES('delta.feature.allowColumnDefaults' = 'supported')
         """
         
         try:
