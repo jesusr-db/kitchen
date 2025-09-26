@@ -94,7 +94,7 @@ class UCState:
         Add a resource to state.
         
         Args:
-            resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, models, catalogs, warehouses)
+            resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, endpoints, catalogs, warehouses)
             resource_obj: The API return object from Databricks SDK
             
         Returns:
@@ -206,7 +206,7 @@ class UCState:
     def clear_all(self, dry_run: bool = False) -> Dict[str, Dict[str, List[Dict[str, str]]]]:
         """
         Remove all resources from Databricks and clear state.
-        Deletion order: jobs → pipelines → models → apps → warehouses → databaseinstances → catalogs
+        Deletion order: jobs → pipelines → endpoints → apps → warehouses → databaseinstances → catalogs
         
         Args:
             dry_run: If True, only show what would be deleted without actually deleting
@@ -219,8 +219,8 @@ class UCState:
                 }
             }
         """
-        # Define deletion order: jobs → pipelines → models → apps → warehouses → catalogs → databaseinstances
-        deletion_order = ['jobs', 'pipelines', 'models', 'apps', 'warehouses', 'catalogs', 'databaseinstances']
+        # Define deletion order: jobs → pipelines → endpoints → apps → warehouses → catalogs → databaseinstances
+        deletion_order = ['jobs', 'pipelines', 'endpoints', 'apps', 'warehouses', 'catalogs', 'databaseinstances']
         results = {}
         
         for resource_type in deletion_order:
@@ -247,7 +247,9 @@ class UCState:
                     resource_name = resource_data.get('settings', {}).get('name') or resource_data.get('job_id', 'Unknown')
                 elif resource_type == 'pipelines':
                     resource_name = resource_data.get('name') or resource_data.get('pipeline_id', 'Unknown')
-                elif resource_type in ['models', 'apps']:
+                elif resource_type == 'endpoints':
+                    resource_name = resource_data.get('endpoint_name', 'Unknown')
+                elif resource_type == 'apps':
                     resource_name = resource_data.get('name', 'Unknown')
                 elif resource_type == 'warehouses':
                     resource_name = resource_data.get('name') or resource_data.get('id', 'Unknown')
@@ -286,13 +288,13 @@ class UCState:
                         else:
                             error_message = "No pipeline_id found in resource data"
                     
-                    elif resource_type == 'models':
-                        endpoint_name = resource_data.get('name')
+                    elif resource_type == 'endpoints':
+                        endpoint_name = resource_data.get('endpoint_name')
                         if endpoint_name:
                             from mlflow.deployments import get_deploy_client
                             client = get_deploy_client("databricks")
                             client.delete_endpoint(endpoint=endpoint_name)
-                            logger.info(f"Deleted model endpoint {endpoint_name}")
+                            logger.info(f"Deleted serving endpoint {endpoint_name}")
                             deletion_successful = True
                         else:
                             error_message = "No endpoint name found in resource data"
@@ -424,7 +426,7 @@ def add(catalog: str, resource_type: str, resource_obj: Any, schema: str = "_int
     
     Args:
         catalog: The catalog name to store state in
-        resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, models, catalogs, warehouses)
+        resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, endpoints, catalogs, warehouses)
         resource_obj: The API return object from Databricks SDK
         schema: Schema name (default: _internal_state)
         table: Table name (default: resources)
