@@ -219,8 +219,8 @@ class UCState:
                 }
             }
         """
-        # Define deletion order: jobs → pipelines → models → apps → warehouses → databaseinstances → catalogs
-        deletion_order = ['jobs', 'pipelines', 'models', 'apps', 'warehouses', 'databaseinstances', 'catalogs']
+        # Define deletion order: jobs → pipelines → models → apps → warehouses → catalogs → databaseinstances
+        deletion_order = ['jobs', 'pipelines', 'models', 'apps', 'warehouses', 'catalogs', 'databaseinstances']
         results = {}
         
         for resource_type in deletion_order:
