@@ -94,7 +94,7 @@ class UCState:
         Add a resource to state.
         
         Args:
-            resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, endpoints, catalogs, warehouses)
+            resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, endpoints, catalogs, databasecatalogs, warehouses)
             resource_obj: The API return object from Databricks SDK
             
         Returns:
@@ -219,8 +219,8 @@ class UCState:
                 }
             }
         """
-        # Define deletion order: jobs → pipelines → endpoints → apps → warehouses → catalogs → databaseinstances
-        deletion_order = ['jobs', 'pipelines', 'endpoints', 'apps', 'warehouses', 'catalogs', 'databaseinstances']
+        # Define deletion order: jobs → pipelines → endpoints → apps → warehouses → databasecatalogs → catalogs → databaseinstances
+        deletion_order = ['jobs', 'pipelines', 'endpoints', 'apps', 'warehouses', 'databasecatalogs', 'catalogs', 'databaseinstances']
         results = {}
         
         for resource_type in deletion_order:
@@ -255,6 +255,8 @@ class UCState:
                     resource_name = resource_data.get('name') or resource_data.get('id', 'Unknown')
                 elif resource_type == 'databaseinstances':
                     resource_name = resource_data.get('name', 'Unknown')
+                elif resource_type == 'databasecatalogs':
+                    resource_name = resource_data if isinstance(resource_data, str) else resource_data.get('name', 'Unknown')
                 elif resource_type == 'catalogs':
                     resource_name = resource_data if isinstance(resource_data, str) else resource_data.get('name', 'Unknown')
                 
@@ -325,6 +327,15 @@ class UCState:
                             deletion_successful = True
                         else:
                             error_message = "No instance name found in resource data"
+                    
+                    elif resource_type == 'databasecatalogs':
+                        catalog_name = resource_data if isinstance(resource_data, str) else resource_data.get('name')
+                        if catalog_name:
+                            self.w.database.delete_database_catalog(name=catalog_name)
+                            logger.info(f"Deleted database catalog {catalog_name}")
+                            deletion_successful = True
+                        else:
+                            error_message = "No database catalog name found in resource data"
                     
                     elif resource_type == 'catalogs':
                         catalog_name = resource_data if isinstance(resource_data, str) else resource_data.get('name')
@@ -426,7 +437,7 @@ def add(catalog: str, resource_type: str, resource_obj: Any, schema: str = "_int
     
     Args:
         catalog: The catalog name to store state in
-        resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, endpoints, catalogs, warehouses)
+        resource_type: Type of resource (jobs, pipelines, apps, databaseinstances, endpoints, catalogs, databasecatalogs, warehouses)
         resource_obj: The API return object from Databricks SDK
         schema: Schema name (default: _internal_state)
         table: Table name (default: resources)
