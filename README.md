@@ -20,7 +20,7 @@ Execute "Casper's Initializer" job. You can "Run All" for the complete demo, or 
 Then open Databricks and watch:
 - 📦 Orders stream in from ghost kitchens
 - 🔄 Pipelines curate raw → bronze → silver → gold  
-- 📊 Dashboards & apps come alive with real-time insights
+- 📊 [Dashboards](https://github.com/databricks-solutions/caspers-kitchens/issues/13) & apps come alive with real-time insights
 - 🤖 RefundGPT agent decides whether refunds should be granted
 
 That's it! Your Casper's Kitchens environment will be up and running.
