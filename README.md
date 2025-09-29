@@ -11,7 +11,7 @@ Casper's Kitchens is a simulated food-delivery platform that shows off the full 
 Create a new Git folder in your workspace and import this repository
 
 # Initialize the demo
-Run init.ipynb to create the "Casper's Initializer" job
+Run init.ipynb to create the "Casper's Initializer" job. By default the job will use the catalog `caspers` but you may change it using the notebook parameters.
 
 # Launch your ghost kitchen empire
 Execute "Casper's Initializer" job. You can "Run All" for the complete demo, or select only specific stages (see Available Stages below)
@@ -35,9 +35,23 @@ The platform serves dual purposes:
 
 The platform generates realistic order data with full order lifecycle tracking - from creation to delivery - including kitchen status updates, driver GPS coordinates, and configurable business parameters.
 
+## 🏗️ Architecture
+
+![Stages](./images/stages.png)
+
+The system is structured as **stages** (found in `./stages/`) orchestrated by a single Databricks Lakeflow Job called "Casper's Initializer". Each stage corresponds to a task in the job (pictured above), enabling:
+
+- **🎯 Customizable demos**: Run only the stages relevant to your use case
+- **🔧 Easy extensibility**: Add new demos that integrate seamlessly under the Casper's narrative  
+- **⚡ Databricks-native**: Uses Databricks itself to bootstrap the demo environment
+
+The dependencies between stages is reflected in the job's DAG. 
+
+You can add new stages to this DAG to extend the demo but they do not NEED to be dependent on the existing DAG if they do not actually use assets produced by other stages.
+
 ### 📊 Generated Event Types
 
-The data generator produces the following realistic events for each order:
+The data generator produces the following realistic events for each order in the Volume `caspers.simulator.events`:
 
 | Event | Description | Data Included |
 |-------|-------------|---------------|
@@ -51,14 +65,6 @@ The data generator produces the following realistic events for each order:
 | `delivered` | Order delivered to customer | Final delivery location coordinates |
 
 Each event includes order ID, sequence number, timestamp, and location context. The system models realistic timing between events based on configurable service times, kitchen capacity, and real road network routing via OpenStreetMap data.
-
-## 🏗️ Architecture
-
-The system is structured as **stages** (found in `./stages/`) orchestrated by a single Databricks Lakeflow Job called "Casper's Initializer". Each stage corresponds to a task in the job, enabling:
-
-- **🎯 Customizable demos**: Run only the stages relevant to your use case
-- **🔧 Easy extensibility**: Add new demos that integrate seamlessly under the Casper's narrative  
-- **⚡ Databricks-native**: Uses Databricks itself to bootstrap the demo environment
 
 ### 🛠️ Available Stages
 
