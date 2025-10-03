@@ -11,6 +11,7 @@ Casper's Kitchens is a simulated food-delivery platform that shows off the full 
 2. **Initialize the demo**: Run `init.ipynb` to create the "Casper's Initializer" job
    - By default the job will use the catalog `caspers`
    - **Important**: If you're working in a metastore that spans multiple workspaces and another workspace has already used the catalog name `caspers`, you'll need to specify a different name using the `CATALOG` parameter. Catalog names must be unique within a metastore.
+   - By default, only the San Francisco location will generate data. To run additional locations (like Chicago) or create your own, see `data/generator/configs/README.md` and use the `LOCATIONS` parameter.
 
 3. **Launch your ghost kitchen empire**:
    - Navigate to **Jobs & Pipelines** in the left sidebar of your Databricks workspace
