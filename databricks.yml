@@ -47,7 +47,7 @@ resources:
         - name: SIMULATOR_SCHEMA
           default: simulator
         - name: LOCATIONS
-          default: sanfrancisco.json
+          default: all
 
       tasks:
         - task_key: Raw_Data

@@ -1,0 +1,14 @@
+{
+  "run_name": "caspers: cleanup (ephemeral)",
+  "performance_target": "PERFORMANCE_OPTIMIZED",
+  "tasks": [
+    {
+      "task_key": "destroy",
+      "notebook_task": {
+        "notebook_path": "/Workspace/Users/jesus.rodriguez@databricks.com/caspers-kitchens/destroy",
+        "source": "WORKSPACE",
+        "base_parameters": { "CATALOG": "kitchendemo" }
+      }
+    }
+  ]
+}
