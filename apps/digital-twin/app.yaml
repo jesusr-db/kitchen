@@ -1,0 +1,24 @@
+name: caspers-digital-twin
+description: Digital twin frontend for Casper's Kitchens ghost kitchen visualization
+
+command:
+  - "uvicorn"
+  - "app.main:app"
+  - "--host"
+  - "0.0.0.0"
+  - "--port"
+  - "8000"
+
+resources:
+  - name: main
+    serving:
+      min_replicas: 1
+      max_replicas: 1
+
+env:
+  - name: CATALOG
+    value: ${var.catalog}
+  - name: SIMULATOR_SCHEMA
+    value: simulator
+  - name: LAKEFLOW_SCHEMA
+    value: lakeflow
