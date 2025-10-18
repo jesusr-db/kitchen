@@ -19,9 +19,9 @@ LOCATION_DISPLAY_NAMES = {
     "houston_westside": "Houston Westside",
 }
 
-# Default coordinates if not found in data (fallback)
+# Default coordinates from generator configs (actual kitchen addresses)
 DEFAULT_COORDINATES = {
-    "sanfrancisco": (37.7749, -122.4194, 4.0),
+    "sanfrancisco": (37.7913, -122.3937, 4.0),  # 160 Spear St, San Francisco, CA 94105
     "chicago": (41.8781, -87.6298, 5.0),
     "houston": (29.7604, -95.3698, 5.0),
     "houston_westside": (29.7604, -95.5698, 5.0),

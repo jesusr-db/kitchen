@@ -309,10 +309,10 @@ Phase 1 provides a solid foundation for Phase 2 implementation:
 
 ### Phase 2 Preparation
 
-1. **Research Mapbox**:
-   - Review Mapbox GL JS documentation
-   - Plan marker clustering strategy
-   - Design route visualization approach
+1. **Research React Leaflet**:
+   - Review React Leaflet documentation
+   - Plan marker clustering strategy with Leaflet.markercluster
+   - Design route visualization approach with Polyline components
 
 2. **Design kitchen pipeline**:
    - Sketch component layout

@@ -14,9 +14,10 @@ This application provides an interactive digital twin interface for visualizing 
 ## Architecture
 
 - **Backend**: FastAPI (Python) connecting to Databricks lakeflow tables
-- **Frontend**: React + TypeScript + Tailwind CSS
+- **Frontend**: React + TypeScript + Tailwind CSS + React Leaflet
 - **Deployment**: Databricks Apps framework
 - **Data Source**: Casper's Kitchens lakeflow tables (gold_*, silver_*)
+- **Maps**: React Leaflet with OpenStreetMap tiles (no API key required)
 
 ## Local Development
 
@@ -155,7 +156,7 @@ apps/digital-twin/
 - API client (TanStack Query)
 
 🚧 **Coming in Phase 2** (Weeks 3-4)
-- Map visualization with Mapbox
+- Map visualization with React Leaflet
 - Kitchen pipeline UI
 - Metrics dashboard
 - Time range queries

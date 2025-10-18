@@ -1,4 +1,5 @@
 import type { LocationsResponse } from '@/types/location';
+import type { TimeRangeResponse } from '@/types/order';
 
 const API_BASE_URL = '/api/v1';
 
@@ -44,5 +45,22 @@ export const api = {
   async healthCheck(): Promise<{ status: string }> {
     const response = await fetchWithRetry('/health');
     return handleResponse(response);
+  },
+
+  async fetchTimeRange(
+    location: string,
+    startTime: Date,
+    endTime: Date,
+    limit: number = 100
+  ): Promise<TimeRangeResponse> {
+    const params = new URLSearchParams({
+      start: startTime.toISOString(),
+      end: endTime.toISOString(),
+      limit: limit.toString(),
+    });
+    const response = await fetchWithRetry(
+      `${API_BASE_URL}/locations/${location}/time-range?${params}`
+    );
+    return handleResponse<TimeRangeResponse>(response);
   },
 };

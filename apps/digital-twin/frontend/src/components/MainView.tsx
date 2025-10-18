@@ -1,4 +1,5 @@
 import { useAppStore } from '@/store/appStore';
+import { MapContainer } from './map/MapContainer';
 
 export function MainView() {
   const selectedLocation = useAppStore((state) => state.selectedLocation);
@@ -22,11 +23,8 @@ export function MainView() {
     <div className="h-full p-4">
       <div className="grid h-full grid-cols-3 gap-4">
         {/* Map Panel - Left 2/3 */}
-        <div className="col-span-2 rounded-lg bg-white p-6 shadow">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Delivery Map</h3>
-          <div className="flex items-center justify-center h-full text-gray-500">
-            Map visualization coming in Phase 2
-          </div>
+        <div className="col-span-2 rounded-lg bg-white shadow overflow-hidden">
+          <MapContainer />
         </div>
 
         {/* Right Column - Kitchen & Metrics */}

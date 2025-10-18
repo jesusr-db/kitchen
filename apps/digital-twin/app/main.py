@@ -9,7 +9,7 @@ from fastapi.responses import FileResponse
 import os
 
 from app.config import settings
-from app.api import locations
+from app.api import locations, orders
 
 # Configure logging
 logging.basicConfig(
@@ -51,6 +51,11 @@ app.include_router(
     locations.router,
     prefix=settings.api_v1_prefix,
     tags=["locations"]
+)
+app.include_router(
+    orders.router,
+    prefix=settings.api_v1_prefix,
+    tags=["orders"]
 )
 
 

@@ -51,7 +51,7 @@ Spark_Declarative_Pipeline (existing)
 - Vite for build tooling
 - TanStack Query for data fetching
 - Zustand for state management
-- Mapbox GL JS for map visualization
+- React Leaflet for map visualization
 - Recharts for charts/graphs
 - Tailwind CSS for styling
 
@@ -429,7 +429,7 @@ interface AppState {
 #### 2. Delivery Map
 
 **Features:**
-- Mapbox GL JS base map centered on kitchen location
+- React Leaflet base map with OpenStreetMap tiles centered on kitchen location
 - Kitchen marker (prominent icon at gk_lat/gk_lon)
 - Delivery radius circle (transparent overlay)
 - Active driver markers (moving dots with ping trails)
@@ -438,11 +438,11 @@ interface AppState {
 - Hover tooltips showing order details
 
 **Behavior:**
-- Drivers animate smoothly between ping updates
-- Route lines update color based on delivery progress
+- Drivers animate smoothly between ping updates using Leaflet's built-in animation
+- Route lines update color based on delivery progress using Polyline components
 - Completed deliveries fade out after 30 seconds
 - Click order marker → highlight in pipeline + show details
-- Map bounds auto-adjust to fit all active deliveries
+- Map bounds auto-adjust to fit all active deliveries using fitBounds()
 
 #### 3. Kitchen Pipeline
 
@@ -603,7 +603,7 @@ interface AppState {
 - [ ] Add caching layer for frequently accessed data
 
 **Frontend:**
-- [ ] Integrate Mapbox GL JS
+- [ ] Integrate React Leaflet with OpenStreetMap tiles
 - [ ] Implement DeliveryMapPanel with kitchen marker
 - [ ] Add delivery radius circle overlay
 - [ ] Implement driver markers with animation
@@ -831,8 +831,8 @@ resources:
 ### Frontend Optimization
 
 1. **Map Performance:**
-   - Cluster markers when >50 active deliveries
-   - Use WebGL rendering for animations
+   - Cluster markers when >50 active deliveries using Leaflet.markercluster
+   - Use Leaflet's canvas renderer for better performance
    - Debounce map updates during high-speed replay
 
 2. **State Management:**
@@ -842,7 +842,7 @@ resources:
 
 3. **Bundle Size:**
    - Code splitting by route (future)
-   - Lazy load Mapbox only when needed
+   - Lazy load Leaflet map only when needed
    - Tree-shake unused chart types
 
 ---

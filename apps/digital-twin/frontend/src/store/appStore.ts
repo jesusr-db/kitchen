@@ -59,6 +59,11 @@ export const useAppStore = create<AppState>()(
         );
         
         if (location) {
+          const startDate = new Date(location.date_range.start);
+          
+          // Set time range to first 1 hour by default
+          const adjustedEndDate = new Date(startDate.getTime() + 60 * 60 * 1000);
+          
           set({
             selectedLocation: locationName,
             mapViewport: {
@@ -66,10 +71,10 @@ export const useAppStore = create<AppState>()(
               zoom: 12,
             },
             timeRange: {
-              start: new Date(location.date_range.start),
-              end: new Date(location.date_range.end),
+              start: startDate,
+              end: adjustedEndDate,
             },
-            currentTime: new Date(location.date_range.start),
+            currentTime: startDate,
             playbackState: 'stopped',
             selectedOrder: null,
           });

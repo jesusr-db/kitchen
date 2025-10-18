@@ -1,5 +1,6 @@
 import { Utensils } from 'lucide-react';
 import { LocationSelector } from '../common/LocationSelector';
+import { CustomTimeRangeSelector } from '../CustomTimeRangeSelector';
 
 export function Header() {
   return (
@@ -15,7 +16,10 @@ export function Header() {
           </div>
         </div>
         
-        <LocationSelector />
+        <div className="flex items-center gap-4">
+          <CustomTimeRangeSelector />
+          <LocationSelector />
+        </div>
       </div>
     </header>
   );
